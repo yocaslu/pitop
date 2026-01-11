@@ -1,0 +1,13 @@
+[project]
+name = "pitop"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.2",
+    "gpiozero>=2.0.1",
+    "loguru>=0.7.3",
+    "paramiko>=4.0.0",
+    "psutil>=7.2.1",
+]
