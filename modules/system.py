@@ -1,27 +1,31 @@
 import platform
 import psutil
 from loguru import logger
-
-WIFI_ADAPTER_NAME = 'wlp5s0'
+from time import sleep
+from threading import Thread
+WIFI_ADAPTER_NAME = 'wlan0'
 
 class System():
     def __init__(self) -> None:
-        self.system = None
-        self.net    = None
-        self.cpu    = None
-        self.mem    = None
-        self.disk   = None
-        self.temp   = None
+        self.running = True
+        self.system  = None
+        self.net     = None
+        self.cpu     = None
+        self.mem     = None
+        self.disk    = None
+        self.temp    = None
 
         pass
 
     def update(self):
-        self.system = self._get_system_info()
-        self.net    = self._get_net_info()
-        self.cpu    = self._get_cpu_info()
-        self.mem    = self._get_mem_info()
-        self.disk   = self._get_disk_info()
-        self.temp   = self._get_temp_info()
+        while self.running:
+            self.system = self._get_system_info()
+            self.net    = self._get_net_info()
+            self.cpu    = self._get_cpu_info()
+            self.mem    = self._get_mem_info()
+            self.disk   = self._get_disk_info()
+            self.temp   = self._get_temp_info()
+            sleep(0.25)
 
 
     def _get_net_info(self) -> dict[str, str] | None:
@@ -117,4 +121,5 @@ class System():
         }
 
 RASPBERRY_PY = System()
-RASPBERRY_PY.update()
+Thread(target=RASPBERRY_PY.update, daemon=True).start() # update in background
+
