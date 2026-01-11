@@ -1,9 +1,7 @@
 from flask import Flask, Response
 from modules.system import RASPBERRY_PY
-from pprint import pprint
 import json
 app = Flask(__name__)
-
 
 @app.route("/")
 def home():
